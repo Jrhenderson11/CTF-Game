@@ -1,0 +1,6 @@
+Q:
+This is a question
+H:
+This is a hint
+A:
+This is an answer

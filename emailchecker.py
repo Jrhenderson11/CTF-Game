@@ -15,7 +15,6 @@ def setup():
 	login(user, password)
 	check_emails()
 
-
 def get_login_details(fname):
 	file = open(fname, 'r')
 	lines = file.readlines()
@@ -62,7 +61,6 @@ def check_emails():
 		print "-----------"
 
 
-
 def loop(time):
 	last_id = 0
 	while not quit:
@@ -70,6 +68,5 @@ def loop(time):
 		if len(ids) > last_id:
 			print stuff
 		sleep(time)
-
 
 setup()
