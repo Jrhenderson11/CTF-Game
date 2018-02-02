@@ -1,2 +1,2 @@
-USERNAME
-PASSWORD
+test1
+testpass
