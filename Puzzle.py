@@ -49,7 +49,6 @@ questions = []
 def test_ans(i, ans):
 	questions[i].is_answer(ans)
 
-
 def test_ans_interactive():
 	print "enter question number:"
 	num = int(raw_input())
@@ -87,37 +86,34 @@ def query_question():
 def get_q_from_file(fname):
 	try:
 		file = open(fname, 'r')
-		lines = file.readlines()
+		#lines = file.readlines()
+		text = file.read()
 		file.close()
 	except Exception as e:
 		print "error opening " + fname
 
 	i=1
+	j=1
+	k=1
+	ques = []
 	try:
-		print "starting"
-		while (not "Q:" in lines[i-1]):
-			i = i+1	
-		j=i+1
-		while (not ("H:" in lines[j-1])):
-			j = j+1
-		k = j+1
-		while (not ("A:" in lines[k-1])):
-			k = k+1
-	
-		print "Q found lines " + str(i) + ":" + str(j)
-		question = "".join(lines[i:j-1]).strip()
-		print "H found lines " + str(i) + ":" + str(j)
-		hint = "".join(lines[j:k-1]).strip()
-		print "A found lines " + str(i) + ":" + str(j)
-		ans = (lines[k:])
-		return Question(question, hint, ans)
+		quesblocks = text.split("Q:\n")
+		for block in quesblocks:
+			#print block
+			q, h, a = '','',''
+			if not block == '':
+				q = block.split("H:\n")[0].strip()
+				print q
+				h = (block.split("H:\n")[1]).split("A:\n")[0].strip()
+				print h
+				a = (block.split("H:\n")[1]).split("A:\n")[1].split("\n")
+				print a
+				ques.append(Question(q, h, a))
+		return ques
 	except Exception as e:
 		print e
 		print "invalid Q file format"
 
-
-def fill_list():
-	
 
 def print_intro():
 	print "          ____"
@@ -166,9 +162,8 @@ def run():
 if __name__ == '__main__':
 
 	id = str(random.randint(1, 100000))
-	questions.append(get_q_from_file("q1.txt"))
-	raw_input()
-	#fill_list()
+	questions.extend(get_q_from_file("q1.txt"))
+	
 	try:
 		run()
 	except KeyboardInterrupt as e:
